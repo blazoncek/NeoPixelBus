@@ -172,9 +172,14 @@ public:
         return _sizeData;
     };
 
-    size_t getBuffersSize() const
+    size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
     {
-        return _sizeData + sizeof(Tlc59711MethodBase<T_TWOWIRE>);
+        size_t dataSize = _sizeData;
+        if (pixelCount > 0)
+        {
+            dataSize = NeoUtil::RoundUp(pixelCount * pixelSize, Tlc69711Settings::c_dataPerChipSize) + settingsSize;
+        }
+        return dataSize + sizeof(Tlc59711MethodBase<T_TWOWIRE>);
     };
 
     void applySettings([[maybe_unused]] const SettingsObject& settings)

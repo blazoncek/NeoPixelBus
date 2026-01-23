@@ -558,7 +558,7 @@ public:
         MuxMap.MarkMuxBusUpdated(muxId);
     }
 
-    size_t getBuffersSize() const
+    size_t MemorySize() const
     {
         return I2sBufferSize + sizeof(NeoEspI2sMonoBuffContext<T_MUXMAP>) + sizeof(T_MUXMAP);
     };
@@ -711,7 +711,7 @@ public:
         MuxMap.MarkMuxBusUpdated(muxId);
     }
 
-    size_t getBuffersSize() const
+    size_t MemorySize() const
     {
         return 2 * I2sBufferSize + sizeof(NeoEspI2sDblBuffContext<T_MUXMAP>) + sizeof(T_MUXMAP);
     };
@@ -781,9 +781,9 @@ public:
         s_context.MuxMap.MarkMuxBusUpdated(_muxId);
     }
 
-    size_t getBuffersSize() const
+    size_t MemorySize() const
     {
-        return s_context.getBuffersSize() + sizeof(NeoEsp32I2sMuxBus<T_BUSCONTEXT, T_BUS>);
+        return s_context.MemorySize() + sizeof(NeoEsp32I2sMuxBus<T_BUSCONTEXT, T_BUS>);
     };
 
 private:
@@ -872,9 +872,14 @@ public:
         return _sizeData;
     }
 
-    size_t getBuffersSize() const
+    size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
     {
-        return _sizeData + _bus.getBuffersSize() + sizeof(NeoEsp32I2sXMethodBase<T_SPEED, T_BUS, T_INVERT>);
+        size_t dataSize = _sizeData;
+        if (pixelCount > 0)
+        {
+            dataSize = pixelCount * pixelSize + settingsSize;
+        }
+        return dataSize + _bus.MemorySize() + sizeof(NeoEsp32I2sXMethodBase<T_SPEED, T_BUS, T_INVERT>);
     };
 
     void applySettings([[maybe_unused]] const SettingsObject& settings)

@@ -160,9 +160,9 @@ public:
         _state &= ~NEO_DIRTY;
     };
 
-    size_t BusSize() const
+    size_t MemorySize(size_t countPixels = 0) const
     {
-        return _method.getBuffersSize();
+        return _method.MemorySize(countPixels, T_COLOR_FEATURE::PixelSize, T_COLOR_FEATURE::SettingsSize);
     };
 
     uint8_t* Pixels() 

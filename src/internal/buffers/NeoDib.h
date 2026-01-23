@@ -157,9 +157,14 @@ public:
         _state &= ~NEO_DIRTY;
     };
 
-    size_t getBuffersSize() const
+    size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
     {
-        return PixelsSize() + sizeof(NeoDib<T_COLOR_OBJECT>);
+        size_t dataSize = PixelsSize();
+        if (pixelCount > 0)
+        {
+            dataSize = pixelCount * pixelSize + settingsSize;
+        }
+        return dataSize + sizeof(NeoDib<T_COLOR_OBJECT>);
     };
 
 private:

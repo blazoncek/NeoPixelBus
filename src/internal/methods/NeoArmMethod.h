@@ -112,9 +112,14 @@ public:
         return _sizeData;
     };
 
-    size_t getBuffersSize() const
+    size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
     {
-        return _sizeData + sizeof(NeoArmMethodBase<T_SPEED>);
+        size_t dataSize = _sizeData;
+        if (pixelCount > 0)
+        {
+            dataSize = pixelCount * pixelSize + settingsSize;
+        }
+        return dataSize + sizeof(NeoArmMethodBase<T_SPEED>);
     };
 
     void applySettings([[maybe_unused]] const SettingsObject& settings)

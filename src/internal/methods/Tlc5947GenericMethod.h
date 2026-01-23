@@ -185,9 +185,14 @@ public:
         return _sizeData;
     };
 
-    size_t getBuffersSize() const
+    size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
     {
-        return _sizeData + sizeof(Tlc5947MethodBase<T_BITCONVERT, T_TWOWIRE>);
+        size_t dataSize = _sizeData;
+        if (pixelCount > 0)
+        {
+            dataSize = ((pixelCount * pixelSize + TLC5947_MODULE_PWM_CHANNEL_COUNT - 1) / TLC5947_MODULE_PWM_CHANNEL_COUNT) * TLC5947_MODULE_PWM_CHANNEL_COUNT + settingsSize;
+        }
+        return dataSize + sizeof(Tlc5947MethodBase<T_BITCONVERT, T_TWOWIRE>);
     };
 
     void applySettings([[maybe_unused]] const SettingsObject& settings)

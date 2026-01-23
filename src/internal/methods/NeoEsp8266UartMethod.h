@@ -211,9 +211,14 @@ protected:
         return false;
     }
 
-    size_t getBuffersSize() const
+    size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
     {
-        return _sizeData + sizeof(NeoEsp8266Uart<T_UARTFEATURE, T_UARTCONTEXT>);
+        size_t dataSize = _sizeData;
+        if (pixelCount > 0)
+        {
+            dataSize = pixelCount * pixelSize + settingsSize;
+        }
+        return dataSize + sizeof(NeoEsp8266Uart<T_UARTFEATURE, T_UARTCONTEXT>);
     };
 
 };
@@ -291,9 +296,14 @@ protected:
         return true;
     }
 
-    size_t getBuffersSize() const
+    size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
     {
-        return 2 * _sizeData + sizeof(NeoEsp8266AsyncUart<T_UARTFEATURE, T_UARTCONTEXT>);
+        size_t dataSize = 2 * _sizeData;
+        if (pixelCount > 0)
+        {
+            dataSize = 2 * (pixelCount * pixelSize + settingsSize);
+        }
+        return dataSize + sizeof(NeoEsp8266AsyncUart<T_UARTFEATURE, T_UARTCONTEXT>);
     };
 
 private:

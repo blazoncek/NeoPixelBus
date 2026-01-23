@@ -203,9 +203,14 @@ public:
         return _sizePixelData;
     };
 
-    size_t getBuffersSize() const
+    size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
     {
-        return 2 * _spiBufferSize + sizeof(DotStarEsp32DmaSpiMethodBase<T_SPISPEED, T_SPIBUS>); // data and dmadata buffers plus object size
+        size_t dataSize = 2 * _spiBufferSize;
+        if (pixelCount > 0)
+        {
+            dataSize = 2 * (4 * T_SPIBUS::ParallelBits + pixelCount * pixelSize + settingsSize + ((pixelCount + 15) / 16 * T_SPIBUS::ParallelBits));
+        }
+        return dataSize + sizeof(DotStarEsp32DmaSpiMethodBase<T_SPISPEED, T_SPIBUS>); // data and dmadata buffers plus object size
     };
 
     void applySettings([[maybe_unused]] const SettingsObject& settings)

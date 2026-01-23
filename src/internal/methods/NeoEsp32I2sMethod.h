@@ -300,9 +300,18 @@ public:
         return _sizeData;
     }
 
-    size_t getBuffersSize() const
+    size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
     {
-        return _sizeData + _i2sBufferSize + i2sGetBufferSize(_bus.I2sBusNumber) + sizeof(NeoEsp32I2sMethodBase<T_SPEED, T_BUS, T_INVERT, T_CADENCE>);
+        size_t dataSize = _sizeData + _i2sBufferSize;
+        if (pixelCount > 0)
+        {
+            dataSize = pixelCount * pixelSize + settingsSize +
+                (NeoUtil::RoundUp(pixelCount * T_CADENCE::DmaBitsPerPixelBit * pixelSize + T_CADENCE::DmaBitsPerPixelBit * settingsSize, 4) +
+                 NeoUtil::RoundUp(T_CADENCE::DmaBitsPerPixelBit * T_SPEED::ResetTimeUs / T_SPEED::ByteSendTimeUs(T_SPEED::BitSendTimeNs), 4));
+        } else {
+            dataSize += i2sGetBufferSize(_bus.I2sBusNumber);
+        }
+        return dataSize + sizeof(NeoEsp32I2sMethodBase<T_SPEED, T_BUS, T_INVERT, T_CADENCE>);
     };
 
     void applySettings([[maybe_unused]] const SettingsObject& settings)

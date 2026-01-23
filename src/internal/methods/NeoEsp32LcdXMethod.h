@@ -512,7 +512,7 @@ public:
         MuxMap.MarkMuxBusUpdated(muxId);
     }
 
-    size_t getBuffersSize() const
+    size_t MemorySize() const
     {
         return dmaBlockSize + LcdBufferSize + sizeof(NeoEsp32LcdMonoBuffContext<T_MUXMAP>) + sizeof(T_MUXMAP);
     };
@@ -674,9 +674,14 @@ public:
         return _sizeData;
     }
 
-    size_t getBuffersSize() const
+    size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
     {
-        return _sizeData + _bus.getBuffersSize() + sizeof(NeoEsp32LcdMethodBase<T_SPEED, T_BUS, T_INVERT>);
+        size_t dataSize = _sizeData;
+        if (pixelCount > 0)
+        {
+            dataSize = pixelCount * pixelSize + settingsSize;
+        }
+        return dataSize + _bus.MemorySize() + sizeof(NeoEsp32LcdXMethodBase<T_SPEED, T_BUS, T_INVERT>);
     };
 
     void applySettings([[maybe_unused]] const SettingsObject& settings)
