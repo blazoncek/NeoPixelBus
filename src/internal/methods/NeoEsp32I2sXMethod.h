@@ -560,7 +560,7 @@ public:
 
     size_t getBuffersSize() const
     {
-        return I2sBufferSize + sizeof(NeoEsp32I2sMonoBufContext<T_MUXMAP>) + sizeof(T_MUXMAP);
+        return I2sBufferSize + sizeof(NeoEspI2sMonoBuffContext<T_MUXMAP>) + sizeof(T_MUXMAP);
     };
 
 };
@@ -713,7 +713,7 @@ public:
 
     size_t getBuffersSize() const
     {
-        return 2 * I2sBufferSize + sizeof(NeoEsp32I2sDblBuffContext<T_MUXMAP>) + sizeof(T_MUXMAP);
+        return 2 * I2sBufferSize + sizeof(NeoEspI2sDblBuffContext<T_MUXMAP>) + sizeof(T_MUXMAP);
     };
 };
 

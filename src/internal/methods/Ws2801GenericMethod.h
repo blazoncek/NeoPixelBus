@@ -125,7 +125,7 @@ public:
 
     size_t getBuffersSize() const
     {
-        return _sizeData + sizeof(Ws2901MethodBase<T_TWOWIRE>);
+        return _sizeData + sizeof(Ws2801MethodBase<T_TWOWIRE>);
     };
 
     void applySettings([[maybe_unused]] const SettingsObject& settings)
