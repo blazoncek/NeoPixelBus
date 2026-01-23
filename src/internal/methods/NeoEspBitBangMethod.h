@@ -277,6 +277,11 @@ public:
         return _sizeData;
     };
 
+    size_t getBuffersSize() const
+    {
+        return _sizeData + sizeof(NeoEspBitBangMethodBase<T_SPEED, T_INVERTED, V_INTER_PIXEL_ISR>);
+    };
+
     void applySettings([[maybe_unused]] const SettingsObject& settings)
     {
     }

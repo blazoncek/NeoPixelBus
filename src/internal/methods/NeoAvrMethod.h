@@ -259,6 +259,11 @@ public:
         return _sizeData;
     };
 
+    size_t getBuffersSize() const
+    {
+        return _sizeData + sizeof(NeoAvrMethodBase<T_SPEED>);
+    };
+
     void applySettings([[maybe_unused]] const SettingsObject& settings)
     {
     }

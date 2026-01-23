@@ -101,6 +101,11 @@ public:
         return _sizeData;
     };
 
+    size_t getBuffersSize() const
+    {
+        return _sizeData + sizeof(PixieStreamMethod);
+    };
+
     void applySettings([[maybe_unused]] const SettingsObject& settings)
     {
     }

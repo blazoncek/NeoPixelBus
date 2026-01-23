@@ -287,6 +287,11 @@ Serial.println();
         return _sizeData;
     }
 
+    size_t getBuffersSize() const
+    {
+        return 2 * _sizeData + sizeof(NeoRp2040x4MethodBase<T_SPEED, T_PIO_INSTANCE, V_INVERT, V_IRQ_INDEX>) + sizeof(NeoRp2040DmaState<V_IRQ_INDEX>);
+    };
+
     void applySettings([[maybe_unused]] const SettingsObject& settings)
     {
     }

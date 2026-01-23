@@ -203,6 +203,11 @@ public:
         return _sizePixelData;
     };
 
+    size_t getBuffersSize() const
+    {
+        return 2 * _spiBufferSize + sizeof(DotStarEsp32DmaSpiMethodBase<T_SPISPEED, T_SPIBUS>); // data and dmadata buffers plus object size
+    };
+
     void applySettings([[maybe_unused]] const SettingsObject& settings)
     {
         _speed.applySettings(settings);

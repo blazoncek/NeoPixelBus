@@ -172,6 +172,11 @@ public:
         return _sizeData;
     };
 
+    size_t getBuffersSize() const
+    {
+        return _sizeData + sizeof(Tlc59711MethodBase<T_TWOWIRE>);
+    };
+
     void applySettings([[maybe_unused]] const SettingsObject& settings)
     {
         _wire.applySettings(settings);

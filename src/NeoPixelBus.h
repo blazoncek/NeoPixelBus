@@ -160,6 +160,11 @@ public:
         _state &= ~NEO_DIRTY;
     };
 
+    size_t BusSize() const
+    {
+        return _method.getBuffersSize();
+    };
+
     uint8_t* Pixels() 
     {
         return _pixels();

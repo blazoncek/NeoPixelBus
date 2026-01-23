@@ -210,6 +210,12 @@ protected:
     {
         return false;
     }
+
+    size_t getBuffersSize() const
+    {
+        return _sizeData + sizeof(NeoEsp8266Uart<T_UARTFEATURE, T_UARTCONTEXT>);
+    };
+
 };
 
 // this template method class is used to glue uart feature and context for
@@ -284,6 +290,11 @@ protected:
         std::swap(_dataSending, _data);
         return true;
     }
+
+    size_t getBuffersSize() const
+    {
+        return 2 * _sizeData + sizeof(NeoEsp8266AsyncUart<T_UARTFEATURE, T_UARTCONTEXT>);
+    };
 
 private:
     T_UARTCONTEXT _context;

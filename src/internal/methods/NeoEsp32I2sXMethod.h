@@ -557,6 +557,12 @@ public:
 
         MuxMap.MarkMuxBusUpdated(muxId);
     }
+
+    size_t getBuffersSize() const
+    {
+        return I2sBufferSize + sizeof(NeoEsp32I2sMonoBufContext<T_MUXMAP>) + sizeof(T_MUXMAP);
+    };
+
 };
 
 //
@@ -704,6 +710,11 @@ public:
 
         MuxMap.MarkMuxBusUpdated(muxId);
     }
+
+    size_t getBuffersSize() const
+    {
+        return 2 * I2sBufferSize + sizeof(NeoEsp32I2sDblBuffContext<T_MUXMAP>) + sizeof(T_MUXMAP);
+    };
 };
 
 
@@ -855,6 +866,11 @@ public:
     {
         return _sizeData;
     }
+
+    size_t getBuffersSize() const
+    {
+        return _sizeData + _bus.getBuffersSize() + sizeof(NeoEsp32I2sXMethodBase<T_SPEED, T_BUS, T_INVERT>);
+    };
 
     void applySettings([[maybe_unused]] const SettingsObject& settings)
     {

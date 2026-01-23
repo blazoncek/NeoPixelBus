@@ -300,6 +300,11 @@ public:
         return _sizeData;
     }
 
+    size_t getBuffersSize() const
+    {
+        return _sizeData + _i2sBufferSize + i2sGetBufferSize(_bus.I2sBusNumber) + sizeof(NeoEsp32I2sMethodBase<T_SPEED, T_BUS, T_INVERT, T_CADENCE>);
+    };
+
     void applySettings([[maybe_unused]] const SettingsObject& settings)
     {
     }

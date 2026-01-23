@@ -390,6 +390,10 @@ protected:
         pinMode(c_I2sPin, INPUT);
     }
 
+    size_t getI2sBuffersSize() const
+    {
+        return GetSendSize() + (_i2sBufDescCount * sizeof(slc_queue_item)) + sizeof(NeoEsp8266I2sMethodCore);
+    };
 
 };
 

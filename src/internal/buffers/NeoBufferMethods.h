@@ -140,6 +140,11 @@ public:
         T_COLOR_FEATURE::movePixelsInc(pPixelDest, pPixelSrc, count);
     }
 
+    size_t getBuffersSize() const
+    {
+        return PixelsSize() + sizeof(NeoBufferMethod<T_COLOR_FEATURE>);
+    };
+
     typedef typename T_COLOR_FEATURE::ColorObject ColorObject;
     typedef T_COLOR_FEATURE ColorFeature;
 

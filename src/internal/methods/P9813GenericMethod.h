@@ -117,6 +117,11 @@ public:
         return _sizeData;
     };
 
+    size_t getBuffersSize() const
+    {
+        return _sizeData + sizeof(P9813MethodBase<T_TWOWIRE>);
+    };
+
     void applySettings([[maybe_unused]] const SettingsObject& settings)
     {
         _wire.applySettings(settings);

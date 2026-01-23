@@ -444,6 +444,11 @@ public:
         return _sizeData;
     };
 
+    size_t getBuffersSize() const
+    {
+        return _sizeData + _dmaBufferSize + sizeof(NeoNrf52xMethodBase<T_SPEED, T_BUS>);
+    };
+
     void applySettings([[maybe_unused]] const SettingsObject& settings)
     {
     }

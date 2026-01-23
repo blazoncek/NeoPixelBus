@@ -157,6 +157,11 @@ public:
         _state &= ~NEO_DIRTY;
     };
 
+    size_t getBuffersSize() const
+    {
+        return PixelsSize() + sizeof(NeoDib<T_COLOR_OBJECT>);
+    };
+
 private:
     const uint16_t _countPixels; // Number of RGB LEDs in strip
     T_COLOR_OBJECT* _pixels;

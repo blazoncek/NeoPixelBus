@@ -112,6 +112,11 @@ public:
         return _sizeData;
     };
 
+    size_t getBuffersSize() const
+    {
+        return _sizeData + sizeof(NeoArmMethodBase<T_SPEED>);
+    };
+
     void applySettings([[maybe_unused]] const SettingsObject& settings)
     {
     }

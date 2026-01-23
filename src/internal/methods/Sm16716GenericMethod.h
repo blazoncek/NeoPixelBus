@@ -124,6 +124,11 @@ public:
         return _sizeData;
     };
 
+    size_t getBuffersSize() const
+    {
+        return _sizeData + sizeof(Sm16716MethodBase<T_TWOWIRE>);
+    };
+
     void applySettings([[maybe_unused]] const SettingsObject& settings)
     {
         _wire.applySettings(settings);

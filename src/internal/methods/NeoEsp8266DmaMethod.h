@@ -289,6 +289,11 @@ public:
         return _sizeData;
     }
 
+    size_t getBuffersSize() const
+    {
+        return _sizeData + GetI2sBuffersSize() + sizeof(NeoEsp8266DmaMethodBase<T_ENCODER, T_SPEED>) ;
+    };
+
     void applySettings([[maybe_unused]] const SettingsObject& settings)
     {
     }

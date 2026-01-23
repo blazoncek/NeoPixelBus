@@ -228,6 +228,11 @@ public:
         return _sizeData - T_SPEED::HeaderSize;
     }
 
+    size_t getBuffersSize() const
+    {
+        return _sizeData + GetI2sBuffersSize() + sizeof(NeoEsp8266I2sDmx512MethodBase<T_SPEED>) ;
+    };
+
     void applySettings([[maybe_unused]] const SettingsObject& settings)
     {
     }

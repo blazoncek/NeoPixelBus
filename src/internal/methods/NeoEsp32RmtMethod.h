@@ -667,6 +667,11 @@ public:
         return _sizeData;
     }
 
+    size_t getBuffersSize() const
+    {
+        return 2 * _sizeData + sizeof(NeoEsp32RmtMethodBase<T_SPEED, T_CHANNEL>);
+    };
+
     void applySettings([[maybe_unused]] const SettingsObject& settings)
     {
     }
