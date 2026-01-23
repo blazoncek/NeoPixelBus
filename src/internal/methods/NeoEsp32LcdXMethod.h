@@ -514,7 +514,7 @@ public:
 
     size_t MemorySize() const
     {
-        return dmaBlockSize + LcdBufferSize + sizeof(NeoEsp32LcdMonoBuffContext<T_MUXMAP>) + sizeof(T_MUXMAP);
+        return ((LcdBufferSize + DMA_DESCRIPTOR_BUFFER_MAX_SIZE - 1) / DMA_DESCRIPTOR_BUFFER_MAX_SIZE + 1) * sizeof(dma_descriptor_t) + LcdBufferSize + sizeof(NeoEspLcdMonoBuffContext<T_MUXMAP>) + sizeof(T_MUXMAP);
     };
 };
 
@@ -584,6 +584,11 @@ public:
     void MarkUpdated()
     {
         s_context.MuxMap.MarkMuxBusUpdated(_muxId);
+    }
+
+    size_t MemorySize() const
+    {
+        return s_context.MemorySize();
     }
 
 private:

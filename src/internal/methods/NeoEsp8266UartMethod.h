@@ -211,6 +211,7 @@ protected:
         return false;
     }
 
+public:
     size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
     {
         size_t dataSize = _sizeData;
@@ -296,6 +297,7 @@ protected:
         return true;
     }
 
+public:
     size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
     {
         size_t dataSize = 2 * _sizeData;
