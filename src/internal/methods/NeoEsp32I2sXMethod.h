@@ -781,6 +781,11 @@ public:
         s_context.MuxMap.MarkMuxBusUpdated(_muxId);
     }
 
+    size_t getBuffersSize() const
+    {
+        return s_context.getBuffersSize() + sizeof(NeoEsp32I2sMuxBus<T_BUSCONTEXT, T_BUS>);
+    };
+
 private:
     static T_BUSCONTEXT s_context;
     uint8_t _muxId; 
