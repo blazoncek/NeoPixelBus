@@ -58,7 +58,6 @@ public:
         _pin(pin),
         _mergedFifoCount((_pio.Instance->dbg_cfginfo & PIO_DBG_CFGINFO_FIFO_DEPTH_BITS) * 2) // merged TX / RX FIFO buffer in words
     {
-        construct();
     }
 
     NeoRp2040x4MethodBase(uint8_t pin, uint16_t pixelCount, size_t elementSize, size_t settingsSize, NeoBusChannel channel) :
@@ -67,7 +66,6 @@ public:
         _pio(channel),
         _mergedFifoCount((_pio.Instance->dbg_cfginfo& PIO_DBG_CFGINFO_FIFO_DEPTH_BITS) * 2) // merged TX / RX FIFO buffer in words
     {
-        construct();
     }
 
     ~NeoRp2040x4MethodBase()
@@ -108,6 +106,8 @@ public:
 
     void Initialize()
     {
+        construct();
+
         // Select the largest FIFO fetch size that aligns with our data size
         // BUT, since RP2040 is little endian, if the source element size is
         // 8 bits, then the larger shift bits accounts for endianess
