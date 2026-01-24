@@ -248,7 +248,7 @@ public:
             return false;
         }
 
-        if (!AllocateI2s())
+        if (!AllocateI2s(T_ENCODER::IdleLevel))
         {
             free(_data);
             return false;
@@ -307,8 +307,21 @@ public:
 
     static size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0)
     {
+        size_t dmaPixelSize = T_ENCODER::DmaBitsPerPixelBit * T_ENCODER::SpacingPixelSize(pixelSize);
+        size_t dmaSettingsSize = T_ENCODER::DmaBitsPerPixelBit * settingsSize;
+
+        size_t i2sBufferSize = pixelCount * dmaPixelSize + dmaSettingsSize;
+        // size is rounded up to nearest c_I2sByteBoundarySize
+        i2sBufferSize = NeoUtil::RoundUp(i2sBufferSize, c_I2sByteBoundarySize);
+
+        // calculate a buffer size that takes reset amount of time
+        size_t i2sResetSize = T_SPEED::ResetTimeUs * T_ENCODER::DmaBitsPerPixelBit / T_SPEED::ByteSendTimeUs(T_SPEED::BitSendTimeNs);
+        // size is rounded up to nearest c_I2sByteBoundarySize
+        i2sResetSize = NeoUtil::RoundUp(i2sResetSize, c_I2sByteBoundarySize);
+        size_t is2BufMaxBlockSize = (c_maxDmaBlockSize / dmaPixelSize) * dmaPixelSize;
+
         size_t dataSize = pixelCount * pixelSize + settingsSize;
-        return dataSize + getI2sBuffersSize() + sizeof(NeoEsp8266DmaMethodBase<T_ENCODER, T_SPEED>) ;
+        return dataSize + NeoEsp8266I2sMethodCore::getI2sBuffersSize(i2sBufferSize, i2sResetSize, is2BufMaxBlockSize) + sizeof(NeoEsp8266DmaMethodBase<T_ENCODER, T_SPEED>) ;
     };
 
     void applySettings([[maybe_unused]] const SettingsObject& settings)
