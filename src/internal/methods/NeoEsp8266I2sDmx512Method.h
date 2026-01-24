@@ -239,13 +239,15 @@ public:
         return _sizeData - T_SPEED::HeaderSize;
     }
 
-    size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
+    size_t MemorySize() const
     {
         size_t dataSize = _sizeData;
-        if (pixelCount > 0)
-        {
-            dataSize = pixelCount * pixelSize + settingsSize;
-        }
+        return dataSize + getI2sBuffersSize() + sizeof(NeoEsp8266I2sDmx512MethodBase<T_SPEED>) ;
+    };
+
+    static size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0)
+    {
+        size_t dataSize = pixelCount * pixelSize + settingsSize;
         return dataSize + getI2sBuffersSize() + sizeof(NeoEsp8266I2sDmx512MethodBase<T_SPEED>) ;
     };
 

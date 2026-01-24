@@ -180,13 +180,15 @@ public:
         return _sizeData;
     };
 
-    size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
+    size_t MemorySize() const
     {
         size_t dataSize = _sizeData;
-        if (pixelCount > 0)
-        {
-            dataSize = NeoUtil::RoundUp(pixelCount * pixelSize, Tlc69711Settings::c_dataPerChipSize) + settingsSize;
-        }
+        return dataSize + sizeof(Tlc59711MethodBase<T_TWOWIRE>);
+    };
+
+    static size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0)
+    {
+        size_t dataSize = NeoUtil::RoundUp(pixelCount * pixelSize, Tlc69711Settings::c_dataPerChipSize) + settingsSize;
         return dataSize + sizeof(Tlc59711MethodBase<T_TWOWIRE>);
     };
 

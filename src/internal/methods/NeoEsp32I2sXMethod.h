@@ -565,6 +565,11 @@ public:
         return I2sBufferSize + sizeof(NeoEspI2sMonoBuffContext<T_MUXMAP>) + sizeof(T_MUXMAP);
     };
 
+    static size_t MemorySize(size_t dataSize)
+    {
+        dataSize *= 8 * T_MUXMAP::DmaBitsPerPixelBit * T_MUXMAP::MuxBusDataSize;
+        return dataSize + sizeof(NeoEspI2sMonoBuffContext<T_MUXMAP>);
+    };
 };
 
 //
@@ -722,6 +727,12 @@ public:
     {
         return 2 * I2sBufferSize + sizeof(NeoEspI2sDblBuffContext<T_MUXMAP>) + sizeof(T_MUXMAP);
     };
+
+    static size_t MemorySize(size_t dataSize)
+    {
+        dataSize *= 8 * T_MUXMAP::DmaBitsPerPixelBit * T_MUXMAP::MuxBusDataSize;
+        return 2 * dataSize + sizeof(NeoEspI2sDblBuffContext<T_MUXMAP>);
+    };
 };
 
 
@@ -798,6 +809,11 @@ public:
         return s_context.MemorySize() + sizeof(NeoEsp32I2sMuxBus<T_BUSCONTEXT, T_BUS>);
     };
 
+    static size_t MemorySize(size_t dataSize)
+    {
+        return T_BUSCONTEXT::MemorySize(dataSize) + sizeof(NeoEsp32I2sMuxBus<T_BUSCONTEXT, T_BUS>);
+    };
+
 private:
     static T_BUSCONTEXT s_context;
     uint8_t _muxId; 
@@ -854,7 +870,7 @@ public:
         if (_data == nullptr)
         {
             log_e("front buffer memory allocation failure");
-            _bus.Destruct();
+            _bus.DeregisterMuxBus(_pin);
             return false;
         }
         return true;
@@ -889,14 +905,16 @@ public:
         return _sizeData;
     }
 
-    size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
+    size_t MemorySize() const
     {
         size_t dataSize = _sizeData;
-        if (pixelCount > 0)
-        {
-            dataSize = pixelCount * pixelSize + settingsSize;
-        }
         return dataSize + _bus.MemorySize() + sizeof(NeoEsp32I2sXMethodBase<T_SPEED, T_BUS, T_INVERT>);
+    };
+
+    static size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0)
+    {
+        size_t dataSize = pixelCount * pixelSize + settingsSize;
+        return dataSize + T_BUS::MemorySize(dataSize) + sizeof(NeoEsp32I2sXMethodBase<T_SPEED, T_BUS, T_INVERT>);
     };
 
     void applySettings([[maybe_unused]] const SettingsObject& settings)

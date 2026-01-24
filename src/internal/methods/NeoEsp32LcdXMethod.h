@@ -523,6 +523,12 @@ public:
     {
         return ((LcdBufferSize + DMA_DESCRIPTOR_BUFFER_MAX_SIZE - 1) / DMA_DESCRIPTOR_BUFFER_MAX_SIZE + 1) * sizeof(dma_descriptor_t) + LcdBufferSize + sizeof(NeoEspLcdMonoBuffContext<T_MUXMAP>) + sizeof(T_MUXMAP);
     };
+
+    static size_t MemorySize(size_t dataSize)
+    {
+        dataSize *= (8 * T_MUXMAP::DmaBitsPerPixelBit * T_MUXMAP::MuxBusDataSize);
+        return ((dataSize + DMA_DESCRIPTOR_BUFFER_MAX_SIZE - 1) / DMA_DESCRIPTOR_BUFFER_MAX_SIZE + 1) * sizeof(dma_descriptor_t) + dataSize + sizeof(NeoEspLcdMonoBuffContext<T_MUXMAP>);
+    };
 };
 
 //
@@ -602,6 +608,11 @@ public:
         return s_context.MemorySize();
     }
 
+    static size_t MemorySize(size_t dataSize)
+    {
+        return T_BUSCONTEXT::MemorySize(dataSize);
+    }
+
 private:
     static T_BUSCONTEXT s_context;
     uint8_t _muxId; 
@@ -659,7 +670,7 @@ public:
         if (_data == nullptr)
         {
             log_e("front buffer memory allocation failure");
-            _bus.Destruct()
+            _bus.DeregisterMuxBus(_pin);
             return false;
         }
         return true;
@@ -695,14 +706,17 @@ public:
         return _sizeData;
     }
 
-    size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
+    size_t MemorySize() const
     {
         size_t dataSize = _sizeData;
-        if (pixelCount > 0)
-        {
-            dataSize = pixelCount * pixelSize + settingsSize;
-        }
         return dataSize + _bus.MemorySize() + sizeof(NeoEsp32LcdXMethodBase<T_SPEED, T_BUS, T_INVERT>);
+    };
+
+    static size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0)
+    {
+        size_t dataSize = pixelCount * pixelSize + settingsSize;
+        size_t numResetBytes = T_SPEED::ResetTimeUs / T_SPEED::ByteSendTimeUs(T_SPEED::BitSendTimeNs);
+        return dataSize + T_BUS::MemorySize(dataSize + numResetBytes) + sizeof(NeoEsp32LcdXMethodBase<T_SPEED, T_BUS, T_INVERT>);
     };
 
     void applySettings([[maybe_unused]] const SettingsObject& settings)

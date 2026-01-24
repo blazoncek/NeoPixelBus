@@ -215,7 +215,7 @@ public:
         return (delta >= T_SPEED::ResetTimeUs);
     }
 
-    void Initialize()
+    bool Initialize()
     {
         digitalWrite(_pin, T_INVERTED::IdleLevel);
 
@@ -280,13 +280,15 @@ public:
         return _sizeData;
     };
 
-    size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
+    size_t MemorySize() const
     {
         size_t dataSize = _sizeData;
-        if (pixelCount > 0)
-        {
-            dataSize = pixelCount * pixelSize + settingsSize;
-        }
+        return dataSize + sizeof(NeoEspBitBangMethodBase<T_SPEED, T_INVERTED, V_INTER_PIXEL_ISR>);
+    };
+
+    static size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0)
+    {
+        size_t dataSize = pixelCount * pixelSize + settingsSize;
         return dataSize + sizeof(NeoEspBitBangMethodBase<T_SPEED, T_INVERTED, V_INTER_PIXEL_ISR>);
     };
 

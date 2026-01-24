@@ -193,13 +193,15 @@ public:
         return _sizeData;
     };
 
-    size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
+    size_t MemorySize() const
     {
         size_t dataSize = _sizeData;
-        if (pixelCount > 0)
-        {
-            dataSize = ((pixelCount * pixelSize + TLC5947_MODULE_PWM_CHANNEL_COUNT - 1) / TLC5947_MODULE_PWM_CHANNEL_COUNT) * TLC5947_MODULE_PWM_CHANNEL_COUNT + settingsSize;
-        }
+        return dataSize + sizeof(Tlc5947MethodBase<T_BITCONVERT, T_TWOWIRE>);
+    };
+
+    static size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0)
+    {
+        size_t dataSize = ((pixelCount * pixelSize + TLC5947_MODULE_PWM_CHANNEL_COUNT - 1) / TLC5947_MODULE_PWM_CHANNEL_COUNT) * TLC5947_MODULE_PWM_CHANNEL_COUNT + settingsSize;
         return dataSize + sizeof(Tlc5947MethodBase<T_BITCONVERT, T_TWOWIRE>);
     };
 

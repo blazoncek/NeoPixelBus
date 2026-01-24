@@ -679,14 +679,16 @@ public:
         return _sizeData;
     }
 
-    size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
+    size_t MemorySize() const
     {
-        size_t dataSize = 2 * _sizeData;
-        if (pixelCount > 0)
-        {
-            dataSize = 2 * (pixelCount * pixelSize) + settingsSize;
-        }
-        return dataSize + sizeof(NeoEsp32RmtMethodBase<T_SPEED, T_CHANNEL>);
+        size_t dataSize = _sizeData;
+        return 2 * dataSize + sizeof(NeoEsp32RmtMethodBase<T_SPEED, T_CHANNEL>);
+    };
+
+    static size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0)
+    {
+        size_t dataSize = pixelCount * pixelSize + settingsSize;
+        return 2 * dataSize + sizeof(NeoEsp32RmtMethodBase<T_SPEED, T_CHANNEL>);
     };
 
     void applySettings([[maybe_unused]] const SettingsObject& settings)

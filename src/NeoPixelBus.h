@@ -192,9 +192,14 @@ public:
         _state &= ~NEO_DIRTY;
     };
 
-    size_t MemorySize(size_t countPixels = 0) const
+    size_t MemorySize() const
     {
-        return _method.MemorySize(countPixels, T_COLOR_FEATURE::PixelSize, T_COLOR_FEATURE::SettingsSize) + sizeof(*this);
+        return _method.MemorySize();
+    };
+
+    static size_t MemorySize(size_t countPixels)
+    {
+        return T_METHOD::MemorySize(countPixels, T_COLOR_FEATURE::PixelSize, T_COLOR_FEATURE::SettingsSize) + sizeof(NeoPixelBus<T_COLOR_FEATURE,T_METHOD>);
     };
 
     uint8_t* Pixels() 

@@ -125,13 +125,15 @@ public:
         return _sizeData;
     };
 
-    size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
+    size_t MemorySize() const
     {
         size_t dataSize = _sizeData;
-        if (pixelCount > 0)
-        {
-            dataSize = pixelCount * pixelSize + settingsSize;
-        }
+        return dataSize + sizeof(P9813MethodBase<T_TWOWIRE>);
+    };
+
+    static size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0)
+    {
+        size_t dataSize = pixelCount * pixelSize + settingsSize;
         return dataSize + sizeof(P9813MethodBase<T_TWOWIRE>);
     };
 

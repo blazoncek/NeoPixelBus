@@ -140,13 +140,15 @@ public:
         T_COLOR_FEATURE::movePixelsInc(pPixelDest, pPixelSrc, count);
     }
 
-    size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0) const
+    size_t MemorySize() const
     {
         size_t dataSize = PixelsSize();
-        if (pixelCount > 0)
-        {
-            dataSize = pixelCount * pixelSize + settingsSize;
-        }
+        return dataSize + sizeof(NeoBufferMethod<T_COLOR_FEATURE>);
+    };
+
+    static size_t MemorySize(size_t pixelCount, size_t pixelSize, size_t settingsSize = 0)
+    {
+        size_t dataSize = pixelCount * pixelSize + settingsSize;
         return dataSize + sizeof(NeoBufferMethod<T_COLOR_FEATURE>);
     };
 
