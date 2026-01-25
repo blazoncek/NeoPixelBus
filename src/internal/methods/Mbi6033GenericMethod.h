@@ -39,7 +39,7 @@ template<typename T_TWOWIRE> class Mbi6033MethodBase
 private:
     static size_t CountChips(size_t pixelCount, size_t elementSize)
     {
-        return NeoUtil::RoundUp(pixelCount * elementSize, c_countBytesPerChip) / c_countBytesPerChip
+        return NeoUtil::RoundUp(pixelCount * elementSize, c_countBytesPerChip) / c_countBytesPerChip;
     }
 
     static size_t GetBufferSize(uint16_t pixelCount, size_t elementSize, size_t settingsSize)
