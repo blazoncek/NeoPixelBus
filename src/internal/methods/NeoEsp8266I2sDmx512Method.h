@@ -129,7 +129,7 @@ public:
 template<typename T_SPEED> class NeoEsp8266I2sDmx512MethodBase : NeoEsp8266I2sMethodCore
 {
 private:
-    static size_t GetBufferSize(uint16_t pixelCount, size_t elementSize, size_t settingsSize)
+    static inline size_t GetBufferSize(uint16_t pixelCount, size_t elementSize, size_t settingsSize)
     {
         return pixelCount * elementSize + settingsSize + T_SPEED::HeaderSize;
     }

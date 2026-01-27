@@ -52,7 +52,7 @@ template <typename T_TWOWIRE>
 class Tlc59711MethodBase
 {
     private:
-    static size_t GetBufferSize(uint16_t pixelCount, size_t elementSize, size_t settingsSize)
+    static inline size_t GetBufferSize(uint16_t pixelCount, size_t elementSize, size_t settingsSize)
     {
         return NeoUtil::RoundUp(pixelCount * elementSize, Tlc69711Settings::c_dataPerChipSize) + settingsSize;
     }

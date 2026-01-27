@@ -186,7 +186,7 @@ public:
 template<typename T_ENCODER, typename T_SPEED> class NeoEsp8266DmaMethodBase : NeoEsp8266I2sMethodCore
 {
 private:
-    static size_t GetBufferSize(uint16_t pixelCount, size_t elementSize, size_t settingsSize)
+    static inline size_t GetBufferSize(uint16_t pixelCount, size_t elementSize, size_t settingsSize)
     {
         return pixelCount * elementSize + settingsSize;
     }

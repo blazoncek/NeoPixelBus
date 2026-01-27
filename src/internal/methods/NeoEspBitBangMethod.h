@@ -191,7 +191,7 @@ public:
 template<typename T_SPEED, typename T_INVERTED, bool V_INTER_PIXEL_ISR> class NeoEspBitBangMethodBase
 {
 private:
-    static size_t GetBufferSize(uint16_t pixelCount, size_t elementSize, size_t settingsSize)
+    static inline size_t GetBufferSize(uint16_t pixelCount, size_t elementSize, size_t settingsSize)
     {
         return pixelCount * elementSize + settingsSize;
     }

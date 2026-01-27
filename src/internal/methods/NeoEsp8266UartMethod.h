@@ -145,7 +145,7 @@ protected:
     uint8_t* _data;        // Holds LED color values
     uint32_t _startTime;     // Microsecond count when last update started
 
-    static size_t GetBufferSize(uint16_t pixelCount, size_t elementSize, size_t settingsSize)
+    static inline size_t GetBufferSize(uint16_t pixelCount, size_t elementSize, size_t settingsSize)
     {
         return pixelCount * elementSize + settingsSize;
     }

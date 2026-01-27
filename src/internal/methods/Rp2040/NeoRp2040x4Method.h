@@ -51,7 +51,7 @@ template<typename T_SPEED,
 class NeoRp2040x4MethodBase
 {
 private:
-    static size_t GetBufferSize(uint16_t pixelCount, size_t elementSize, size_t settingsSize)
+    static inline size_t GetBufferSize(uint16_t pixelCount, size_t elementSize, size_t settingsSize)
     {
         return pixelCount * elementSize + settingsSize;
     }

@@ -35,7 +35,7 @@ License along with NeoPixel.  If not, see
 template<typename T_SPEED> class NeoArmMethodBase
 {
 private:
-    static size_t GetBufferSize(uint16_t pixelCount, size_t elementSize, size_t settingsSize)
+    static inline size_t GetBufferSize(uint16_t pixelCount, size_t elementSize, size_t settingsSize)
     {
         return pixelCount * elementSize + settingsSize;
     }
