@@ -196,6 +196,7 @@ protected:
         }
 
         s_this = this; // store this for the ISR
+        return true;
     }
 
     void FreeI2s()
