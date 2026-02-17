@@ -876,7 +876,7 @@ public:
         if (_data == nullptr)
         {
             log_e("front buffer memory allocation failure");
-            _bus.DeregisterMuxBus(_pin);
+            _bus.DeregisterMuxBus(_pin);  // TODO: not sure if deregistering is needed here
             return false;
         }
         return true;

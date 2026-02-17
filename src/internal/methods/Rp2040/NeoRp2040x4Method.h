@@ -112,7 +112,10 @@ public:
 
     bool Initialize()
     {
-        if (!construct()) return false;
+        if (!construct())
+        {
+          return false;
+        }
 
         // Select the largest FIFO fetch size that aligns with our data size
         // BUT, since RP2040 is little endian, if the source element size is
@@ -331,11 +334,14 @@ private:
     bool construct()
     {
         _dataEditing = static_cast<uint8_t*>(malloc(_sizeData));
-        if (!_dataEditing) {
+        if (!_dataEditing)
+        {
             return false;
         }
         _dataSending = static_cast<uint8_t*>(malloc(_sizeData));
-        if (!_dataSending) {
+        // data cleared later in Begin() with a ClearTo(0)
+        if (!_dataSending)
+        {
             free(_dataEditing);
             _dataEditing = nullptr;
             return false;

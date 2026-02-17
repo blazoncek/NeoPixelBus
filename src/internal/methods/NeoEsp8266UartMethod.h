@@ -278,10 +278,14 @@ protected:
 
     bool InitializeUart(uint32_t uartBaud, bool invert)
     {
-        if (!Initialize()) return false; // allocates _data on success
+        if (!Initialize()) // allocates _data on success
+        {
+          return false;
+        }
 
         _dataSending = static_cast<uint8_t*>(malloc(_sizeData));
-        if (!_dataSending) {
+        if (!_dataSending)
+        {
             free(_data);
             _data = nullptr;
             return false;
@@ -451,7 +455,8 @@ public:
 
     bool Initialize()
     {
-        if (this->InitializeUart(T_SPEED::UartBaud, T_INVERT::Inverted)) {
+        if (this->InitializeUart(T_SPEED::UartBaud, T_INVERT::Inverted))
+        {
             // Inverting logic levels can generate a phantom bit in the led strip bus
             // We need to delay 50+ microseconds the output stream to force a data
             // latch and discard this bit. Otherwise, that bit would be prepended to
