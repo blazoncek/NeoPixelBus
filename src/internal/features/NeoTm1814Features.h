@@ -52,7 +52,8 @@ public:
 };
 
 template <uint8_t V_IC_1, uint8_t V_IC_2, uint8_t V_IC_3, uint8_t V_IC_4>
-class NeoElementsTm1814Settings 
+class NeoWrgbTm1814Elements :
+    public Neo4ByteFeature<V_IC_1, V_IC_2, V_IC_3, V_IC_4>,
 {
 private:
     const static uint16_t EncodeDivisor = 5;
@@ -95,9 +96,4 @@ public:
 };
 
 
-class NeoWrgbTm1814Feature : 
-    public Neo4ByteFeature<ColorIndexW, ColorIndexR, ColorIndexG, ColorIndexB>,
-    public NeoElementsTm1814Settings<ColorIndexW, ColorIndexR, ColorIndexG, ColorIndexB>
-{   
-};
-
+typedef NeoWrgbTm1814Elements<ColorIndexW, ColorIndexR, ColorIndexG, ColorIndexB> NeoWrgbTm1814Feature;
