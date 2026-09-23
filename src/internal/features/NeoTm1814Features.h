@@ -53,7 +53,7 @@ public:
 
 template <uint8_t V_IC_1, uint8_t V_IC_2, uint8_t V_IC_3, uint8_t V_IC_4>
 class NeoWrgbTm1814Elements :
-    public Neo4ByteFeature<V_IC_1, V_IC_2, V_IC_3, V_IC_4>,
+    public Neo4ByteFeature<V_IC_1, V_IC_2, V_IC_3, V_IC_4>
 {
 private:
     const static uint16_t EncodeDivisor = 5;
