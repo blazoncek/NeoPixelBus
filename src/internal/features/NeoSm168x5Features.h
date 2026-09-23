@@ -37,13 +37,8 @@ public:
             uint8_t greenGain, 
             uint8_t blueGain,
             uint8_t whiteGain,
-            uint8_t otherGain,
-            uint16_t redCurrent, 
-            uint16_t greenCurrent,
-            uint16_t blueCurrent,
-            uint16_t whiteCurrent,
-            uint16_t otherCurrent) :
-        NeoRgbwwCurrentSettings(redCurrent, greenCurrent, blueCurrent, whiteCurrent, otherCurrent),
+            uint8_t otherGain) :
+        NeoRgbwwCurrentSettings(CurrentLookup[redGain & 0x1f], CurrentLookup[greenGain & 0x1f], CurrentLookup[blueGain & 0x1f], CurrentLookup[whiteGain & 0x1f], CurrentLookup[otherGain & 0x1f]),
         RedGain(redGain & 0x1f),
         GreenGain(greenGain & 0x1f),
         BlueGain(blueGain & 0x1f), 
@@ -76,6 +71,9 @@ public:
     const uint8_t BlueGain : 5;
     const uint8_t WhiteGain : 5;
     const uint8_t OtherGain : 5;
+
+protected:
+    static const uint16_t CurrentLookup[32]; // in tenth mA
 };
 
 
@@ -89,14 +87,7 @@ public:
             greenGain,
             blueGain,
             whiteGain,
-            otherGain,
-            CurrentLookup[redGain],
-            CurrentLookup[greenGain],
-            CurrentLookup[blueGain],
-            CurrentLookup[whiteGain],
-            CurrentLookup[otherGain])
-    {
-    }
+            otherGain) {}
 
     void Encode(uint8_t* encoded) const
     {
@@ -108,12 +99,6 @@ public:
     }
 
 protected:
-    static constexpr uint16_t CurrentLookup[32] = {
-        102, 203, 304, 405, 506, 607, 708, 809,
-        910, 1011, 1112, 1213, 1307, 1406, 1505, 1602, 
-        1700, 1790, 1885, 1980, 2078, 2168, 2264, 2358, 
-        2450, 2544, 2636, 2728, 2820, 2910, 3000, 3100}; // in tenth mA
-
     /* not to spec, switched to table
     constexpr uint16_t MinCmA =  1020; // 100th of a mA
     constexpr uint16_t MaxCmA = 31000;
