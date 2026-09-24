@@ -31,10 +31,7 @@ License along with NeoPixel.  If not, see
 #include "../NeoColors.h"
 #include "../NeoColorFeatures.h"
 
-const uint16_t NeoSm168x5SettingsBase::CurrentLookup[32] =
+const uint16_t NeoSm168x4SettingsBase::CurrentLookup[16] =
     {
-    102, 203, 304, 405, 506, 607, 708, 809,
-    910, 1011, 1112, 1213, 1307, 1406, 1505, 1602, 
-    1700, 1790, 1885, 1980, 2078, 2168, 2264, 2358, 
-    2450, 2544, 2636, 2728, 2820, 2910, 3000, 3100
-    }; // in tenth mA
+    18, 30, 41, 53, 64, 76, 87, 99, 110, 133, 145, 156, 168, 179, 190
+    };
