@@ -40,8 +40,12 @@ public:
     NeoSm168x4SettingsBase(uint8_t redGain, 
             uint8_t greenGain, 
             uint8_t blueGain, 
-            uint8_t whiteGain) :
-        NeoRgbwCurrentSettings(CurrentLookup[redGain & 0x0f], CurrentLookup[greenGain & 0x0f], CurrentLookup[blueGain & 0x0f], CurrentLookup[whiteGain & 0x0f]),
+            uint8_t whiteGain,
+            uint16_t redCurrent,
+            uint16_t greenCurrent,
+            uint16_t blueCurrent,
+            uint16_t whiteCurrent) :
+        NeoRgbwCurrentSettings(redCurrent, greenCurrent, blueCurrent, whiteCurrent),
         RedGain(redGain & 0x0f),
         GreenGain(greenGain & 0x0f),
         BlueGain(blueGain & 0x0f),
@@ -71,7 +75,8 @@ public:
     const uint8_t BlueGain : 4;
     const uint8_t WhiteGain : 4;
 
-    static const uint8_t CurrentLookup[16];
+protected:
+    static const uint16_t CurrentLookup[16];
 };
 
 template <uint8_t V_IC_1, uint8_t V_IC_2, uint8_t V_IC_3, uint8_t V_IC_4>
@@ -83,10 +88,10 @@ public:
             greenGain, 
             blueGain, 
             whiteGain,
-            CurrentLookup[redGain],
-            CurrentLookup[greenGain],
-            CurrentLookup[blueGain],
-            CurrentLookup[whiteGain])
+            NeoSm168x4SettingsBase::CurrentLookup[redGain & 0x0f],
+            NeoSm168x4SettingsBase::CurrentLookup[greenGain & 0x0f],
+            NeoSm168x4SettingsBase::CurrentLookup[blueGain & 0x0f],
+            NeoSm168x4SettingsBase::CurrentLookup[whiteGain & 0x0f])
     {
     }
 
