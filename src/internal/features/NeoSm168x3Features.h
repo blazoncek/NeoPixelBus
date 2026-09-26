@@ -38,7 +38,7 @@ public:
     NeoSm168x3SettingsBase(uint8_t redGain, 
             uint8_t greenGain, 
             uint8_t blueGain) :
-        NeoRgbwCurrentSettings(CurrentLookup[redGain & 0x0f], CurrentLookup[greenGain & 0x0f], CurrentLookup[blueGain & 0x0f]),
+        NeoRgbCurrentSettings(CurrentLookup[redGain & 0x0f], CurrentLookup[greenGain & 0x0f], CurrentLookup[blueGain & 0x0f]),
         RedGain(redGain & 0x0f),
         GreenGain(greenGain & 0x0f),
         BlueGain(blueGain & 0x0f) {}
